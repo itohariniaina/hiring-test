@@ -1,4 +1,4 @@
-import type { ToDo } from "../types/ToDo";
+import type { ToDo } from "../../types/ToDo";
 type ToDoListProps = {
   todos: ToDo[];
   deleteToDo: (id: string) => void;

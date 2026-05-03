@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { ToDo } from "../types/ToDo";
+import type { ToDo } from "../../types/ToDo";
 type ToDoFormProps = {
   onSubmit: (todo: ToDo) => void;
 };

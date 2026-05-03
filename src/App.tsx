@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Card } from "./components/Card";
+import { Card } from "./components/User/Card";
 import { ErrorMessage } from "./components/ErrorMessage";
 import type { User } from "./types/User";
 import type { ToDo } from "./types/ToDo";
-import TodoForm from "./components/ToDoForm";
-import TodoList from "./components/ToDoList";
-import ToDoFilter from "./components/ToDoFilter";
+import TodoForm from "./components/ToDo/ToDoForm";
+import TodoList from "./components/ToDo/ToDoList";
+import ToDoFilter from "./components/ToDo/ToDoFilter";
+import LoadingComponent from "./components/LoadingComponent";
 
 const App = () => {
   const [userData, setUserData] = useState<User>({
@@ -13,7 +14,7 @@ const App = () => {
     name: "",
     company: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [todos, setTodos] = useState<ToDo[]>([]);
   const [filterText, setFilterText] = useState("");
@@ -65,15 +66,7 @@ const App = () => {
   return (
     <>
       {isLoading ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-          }}
-        >
-          <p style={{ color: "white" }}>Loading ...</p>
-        </div>
+        <LoadingComponent />
       ) : errorMessage ? (
         <ErrorMessage error={errorMessage} />
       ) : (
