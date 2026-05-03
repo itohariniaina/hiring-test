@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import { Card } from "./components/User/Card";
 import { ErrorMessage } from "./components/ErrorMessage";
 import type { User } from "./types/User";
 import type { ToDo } from "./types/ToDo";
-import TodoForm from "./components/ToDo/ToDoForm";
-import TodoList from "./components/ToDo/ToDoList";
-import ToDoFilter from "./components/ToDo/ToDoFilter";
 import LoadingComponent from "./components/LoadingComponent";
+import ToDoMainList from "./components/ToDo/ToDoMainList";
 
 const App = () => {
   const [userData, setUserData] = useState<User>({
@@ -72,37 +69,17 @@ const App = () => {
       ) : errorMessage ? (
         <ErrorMessage error={errorMessage} />
       ) : (
-        <div style={{ maxWidth: 560, margin: "0 auto" }}>
-          <div style={{ textAlign: "left" }}>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Card {...userData} />
-            </div>
-
-            <h2>To Do List</h2>
-            <p>
-              ToDo's done {checkedToDos.length} | Total {todos.length}
-            </p>
-            <TodoForm onSubmit={addTodoToList} />
-            <ToDoFilter filterText={filterText} setFilterText={setFilterText} />
-
-            {filteredToDos.length > 0 ? (
-              <>
-                {filterText.length > 0 && (
-                  <p style={{ textAlign: "left", marginTop: 10 }}>
-                    Number of items found {filteredToDos.length}
-                  </p>
-                )}
-                <TodoList
-                  todos={filteredToDos}
-                  deleteToDo={handleDelete}
-                  check={handleCheck}
-                />
-              </>
-            ) : (
-              <ErrorMessage error={"No items found"} />
-            )}
-          </div>
-        </div>
+        <ToDoMainList
+          userData={userData}
+          todos={todos}
+          checkedToDos={checkedToDos}
+          addTodoToList={addTodoToList}
+          handleDelete={handleDelete}
+          handleCheck={handleCheck}
+          filterText={filterText}
+          setFilterText={setFilterText}
+          filteredToDos={filteredToDos}
+        />
       )}
     </>
   );
