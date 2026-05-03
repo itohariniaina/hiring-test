@@ -22,22 +22,6 @@ const App = () => {
     setUserData(jsonData);
   };
 
-  const addTodoToList = (newTodo: ToDo) => {
-    setTodos([...todos, newTodo]);
-  };
-
-  const handleDelete = (id: string) => {
-    const updatedTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(updatedTodos);
-  };
-
-  const handleCheck = (id: string) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo,
-    );
-    setTodos(updatedTodos);
-  };
-
   useEffect(() => {
     const loadUser = async () => {
       try {
@@ -55,37 +39,61 @@ const App = () => {
     loadUser();
   }, []);
 
+  const addTodoToList = (newTodo: ToDo) => {
+    setTodos([...todos, newTodo]);
+  };
+
+  const handleDelete = (id: string) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
+  const handleCheck = (id: string) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+    );
+    setTodos(updatedTodos);
+  };
+
+  const checkedToDos = todos.filter((todo) => todo.completed);
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-      }}
-    >
+    <>
       {isLoading ? (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
           <p style={{ color: "white" }}>Loading ...</p>
         </div>
       ) : errorMessage ? (
         <ErrorMessage error={errorMessage} />
       ) : (
-        <>
-          <Card {...userData} />
+        <div style={{ maxWidth: 560, margin: "0 auto" }}>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Card {...userData} />
+            </div>
+            <div>
+              <h2>To Do List</h2>
+              <p>
+                ToDo's done {checkedToDos.length} | Total {todos.length}
+              </p>
+              <TodoForm onSubmit={addTodoToList} />
+            </div>
 
-          <div className="App">
-            <h1>To Do List</h1>
-            <TodoForm onSubmit={addTodoToList} />
+            <TodoList
+              todos={todos}
+              deleteToDo={handleDelete}
+              check={handleCheck}
+            />
           </div>
-
-          <TodoList
-            todos={todos}
-            deleteToDo={handleDelete}
-            check={handleCheck}
-          />
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

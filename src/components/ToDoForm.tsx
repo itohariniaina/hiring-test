@@ -18,7 +18,7 @@ const TodoForm = (props: ToDoFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
       <input
         value={todo}
         onChange={(event) => setTodo(event.target.value)}
@@ -26,6 +26,10 @@ const TodoForm = (props: ToDoFormProps) => {
         placeholder="Enter a task"
         required
       ></input>
+      <button type="submit" style={{ marginLeft: 25, height: 25 }}>
+        {" "}
+        Add
+      </button>
     </form>
   );
 };

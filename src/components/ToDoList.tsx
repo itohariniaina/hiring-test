@@ -6,30 +6,31 @@ type ToDoListProps = {
 };
 
 const TodoList = (props: ToDoListProps) => {
-  const handleDelete = (todoId: string) => {
-    props.deleteToDo(todoId);
-  };
-
-  const handleCheck = (todoId: string) => {
-    props.check(todoId);
-  };
-
-  return props.todos.map((t) => (
-    <div key={t.id}>
-      <div>
-        <input
-          type="checkbox"
-          checked={t.completed}
-          onChange={() => handleCheck(t.id)}
-        ></input>
-
-        {t.text}
-      </div>
-      <div>
-        <button onClick={() => handleDelete(t.id)}>Delete</button>
-      </div>
-    </div>
-  ));
+  return (
+    <>
+      {props.todos.map((t) => (
+        <div key={t.id}>
+          <div
+            style={{
+              display: "flex",
+              gap: 10,
+              alignItems: "left",
+              justifyContent: "left",
+              marginTop: 10,
+            }}
+          >
+            {t.text}
+            <input
+              checked={t.completed}
+              onChange={() => props.check(t.id)}
+              type="checkbox"
+            ></input>
+            <button onClick={() => props.deleteToDo(t.id)}>Delete</button>
+          </div>
+        </div>
+      ))}
+    </>
+  );
 };
 
 export default TodoList;
