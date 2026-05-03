@@ -1,5 +1,6 @@
-import type { User } from "../types/User";
+import type { User } from "../../types/User";
 export const Card = (props: User) => {
+  const creationDate = new Date(props.created_at);
   return (
     <>
       {props.avatar_url ? (
@@ -17,6 +18,8 @@ export const Card = (props: User) => {
               {props.name}
             </div>
             <div>{props.company}</div>
+            <div>{props.hireable ? "Available" : ""}</div>
+            <div>{`Account created on : ${creationDate.toLocaleDateString()}`}</div>
           </div>
         </div>
       ) : null}

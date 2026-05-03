@@ -13,6 +13,8 @@ const App = () => {
     avatar_url: "",
     name: "",
     company: "",
+    hireable: false,
+    created_at: "",
   });
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,6 +24,7 @@ const App = () => {
   const getUserData = async () => {
     const response = await fetch(`https://api.github.com/users/itohariniaina`);
     const jsonData = await response.json();
+    //console.log("userData", JSON.stringify(jsonData, null, 2));
     setUserData(jsonData);
   };
 
@@ -31,7 +34,6 @@ const App = () => {
         await getUserData();
         setIsLoading(true);
       } catch (e) {
-        console.log(e);
         if (e instanceof Error) {
           setErrorMessage(e.message);
         }
