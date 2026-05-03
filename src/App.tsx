@@ -4,6 +4,7 @@ import type { User } from "./types/User";
 import type { ToDo } from "./types/ToDo";
 import LoadingComponent from "./components/LoadingComponent";
 import ToDoMainList from "./components/ToDo/ToDoMainList";
+import { UserCard } from "./components/User/UserCard";
 
 const App = () => {
   const [userData, setUserData] = useState<User>({
@@ -69,17 +70,23 @@ const App = () => {
       ) : errorMessage ? (
         <ErrorMessage error={errorMessage} />
       ) : (
-        <ToDoMainList
-          userData={userData}
-          todos={todos}
-          checkedToDos={checkedToDos}
-          addTodoToList={addTodoToList}
-          handleDelete={handleDelete}
-          handleCheck={handleCheck}
-          filterText={filterText}
-          setFilterText={setFilterText}
-          filteredToDos={filteredToDos}
-        />
+        <div style={{ maxWidth: 560, margin: "0 auto" }}>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <UserCard {...userData} />
+            </div>
+            <ToDoMainList
+              todos={todos}
+              checkedToDos={checkedToDos}
+              addTodoToList={addTodoToList}
+              handleDelete={handleDelete}
+              handleCheck={handleCheck}
+              filterText={filterText}
+              setFilterText={setFilterText}
+              filteredToDos={filteredToDos}
+            />
+          </div>
+        </div>
       )}
     </>
   );
