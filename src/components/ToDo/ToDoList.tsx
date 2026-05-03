@@ -1,38 +1,53 @@
+import { ErrorMessage } from "../ErrorMessage";
+
+import ToDoFilter from "./ToDoFilter";
+import TodoForm from "./ToDoForm";
+import TodoList from "./ToDoListItems";
+
 import type { ToDo } from "../../types/ToDo";
-type ToDoListProps = {
+
+type ToDoMainListProps = {
   todos: ToDo[];
-  deleteToDo: (id: string) => void;
-  check: (id: string) => void;
+  checkedToDos: ToDo[];
+  addTodoToList: (todo: ToDo) => void;
+  handleDelete: (id: string) => void;
+  handleCheck: (id: string) => void;
+
+  filterText: string;
+  setFilterText: (text: string) => void;
+  filteredToDos: ToDo[];
 };
 
-const TodoList = (props: ToDoListProps) => {
+const ToDoList = (props: ToDoMainListProps) => {
   return (
     <>
-      <ul>
-        {props.todos.map((t) => (
-          <li key={t.id}>
-            <div
-              style={{
-                display: "flex",
-                gap: 10,
-                alignItems: "left",
-                justifyContent: "left",
-                marginTop: 10,
-              }}
-            >
-              {t.text}
-              <input
-                checked={t.completed}
-                onChange={() => props.check(t.id)}
-                type="checkbox"
-              ></input>
-              <button onClick={() => props.deleteToDo(t.id)}>Delete</button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <h2>To Do List</h2>
+      <p>
+        ToDo's done {props.checkedToDos.length} | Total {props.todos.length}
+      </p>
+      <TodoForm onSubmit={props.addTodoToList} />
+      <ToDoFilter
+        filterText={props.filterText}
+        setFilterText={props.setFilterText}
+      />
+
+      {props.filteredToDos.length > 0 ? (
+        <>
+          {props.filterText.length > 0 && (
+            <p style={{ textAlign: "left", marginTop: 10 }}>
+              Number of items found {props.filteredToDos.length}
+            </p>
+          )}
+          <TodoList
+            todos={props.filteredToDos}
+            deleteToDo={props.handleDelete}
+            check={props.handleCheck}
+          />
+        </>
+      ) : (
+        <ErrorMessage error={"No items found"} />
+      )}
     </>
   );
 };
-
-export default TodoList;
+export default ToDoList;

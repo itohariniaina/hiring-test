@@ -3,7 +3,7 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import type { User } from "./types/User";
 import type { ToDo } from "./types/ToDo";
 import LoadingComponent from "./components/LoadingComponent";
-import ToDoMainList from "./components/ToDo/ToDoMainList";
+import ToDoList from "./components/ToDo/ToDoList";
 import { UserCard } from "./components/User/UserCard";
 
 const App = () => {
@@ -75,7 +75,7 @@ const App = () => {
             <div style={{ display: "flex", justifyContent: "center" }}>
               <UserCard {...userData} />
             </div>
-            <ToDoMainList
+            <ToDoList
               todos={todos}
               checkedToDos={checkedToDos}
               addTodoToList={addTodoToList}
