@@ -2,7 +2,7 @@ import { ErrorMessage } from "../ErrorMessage";
 
 import ToDoFilter from "./ToDoFilter";
 import TodoForm from "./ToDoForm";
-import TodoList from "./ToDoListItems";
+import TodoListItems from "./ToDoListItems";
 
 import type { ToDo } from "../../types/ToDo";
 
@@ -38,7 +38,7 @@ const ToDoList = (props: ToDoMainListProps) => {
               Number of items found {props.filteredToDos.length}
             </p>
           )}
-          <TodoList
+          <TodoListItems
             todos={props.filteredToDos}
             deleteToDo={props.handleDelete}
             check={props.handleCheck}
