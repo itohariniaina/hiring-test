@@ -5,6 +5,7 @@ import type { User } from "./types/User";
 import type { ToDo } from "./types/ToDo";
 import TodoForm from "./components/ToDoForm";
 import TodoList from "./components/ToDoList";
+import ToDoFilter from "./components/ToDoFilter";
 
 const App = () => {
   const [userData, setUserData] = useState<User>({
@@ -15,6 +16,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [todos, setTodos] = useState<ToDo[]>([]);
+  const [filterText, setFilterText] = useState("");
 
   const getUserData = async () => {
     const response = await fetch(`https://api.github.com/users/itohariniaina`);
@@ -57,6 +59,9 @@ const App = () => {
 
   const checkedToDos = todos.filter((todo) => todo.completed);
 
+  const filteredToDos = todos.filter((t) =>
+    t.text.toLowerCase().includes(filterText.toLowerCase()),
+  );
   return (
     <>
       {isLoading ? (
@@ -77,19 +82,30 @@ const App = () => {
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Card {...userData} />
             </div>
-            <div>
-              <h2>To Do List</h2>
-              <p>
-                ToDo's done {checkedToDos.length} | Total {todos.length}
-              </p>
-              <TodoForm onSubmit={addTodoToList} />
-            </div>
 
-            <TodoList
-              todos={todos}
-              deleteToDo={handleDelete}
-              check={handleCheck}
-            />
+            <h2>To Do List</h2>
+            <p>
+              ToDo's done {checkedToDos.length} | Total {todos.length}
+            </p>
+            <TodoForm onSubmit={addTodoToList} />
+            <ToDoFilter filterText={filterText} setFilterText={setFilterText} />
+
+            {filteredToDos.length > 0 ? (
+              <>
+                {filterText.length > 0 && (
+                  <p style={{ textAlign: "left", marginTop: 10 }}>
+                    Number of items found {filteredToDos.length}
+                  </p>
+                )}
+                <TodoList
+                  todos={filteredToDos}
+                  deleteToDo={handleDelete}
+                  check={handleCheck}
+                />
+              </>
+            ) : (
+              <ErrorMessage error={"No items found"} />
+            )}
           </div>
         </div>
       )}

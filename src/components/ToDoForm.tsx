@@ -5,23 +5,23 @@ type ToDoFormProps = {
 };
 
 const TodoForm = (props: ToDoFormProps) => {
-  const [todo, setTodo] = useState("");
+  const [text, setText] = useState("");
 
   const handleSubmit = (event: React.SubmitEvent) => {
     event.preventDefault();
     props.onSubmit({
       id: new Date().getTime().toString(),
-      text: todo,
+      text: text,
       completed: false,
     });
-    setTodo("");
+    setText("");
   };
 
   return (
     <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
       <input
-        value={todo}
-        onChange={(event) => setTodo(event.target.value)}
+        value={text}
+        onChange={(event) => setText(event.target.value)}
         type="text"
         placeholder="Enter a task"
         required
